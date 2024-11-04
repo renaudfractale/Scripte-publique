@@ -47,7 +47,7 @@ Script d'installation automatique de PostgreSQL 17.
 - Port d'écoute PostgreSQL (défaut : 5432)
 - Mot de passe pour l'utilisateur 'postgres'
 
-mettre des le dossier "certificats_serveur" les certifica serveur :
+mettre des le dossier `certificats_serveur` les certificats serveur :
 - `server.crt` : Certificat du serveur
 - `server.key` : Clé privée du serveur
 
