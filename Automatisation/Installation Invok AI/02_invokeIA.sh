@@ -8,4 +8,4 @@ pip3 install "InvokeAI[xformers]" --use-pep517
 deactivate && source .venv/bin/activate
 invokeai-web
 
-(crontab -l 2>/dev/null; echo "@reboot bash /home/paperspace/03_run.sh") | crontab -
+(sudo crontab -l 2>/dev/null; echo "@reboot bash /home/paperspace/03_run.sh") | crontab -
