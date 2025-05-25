@@ -1,0 +1,55 @@
+services:
+  db:
+    image: mariadb:10.11
+    restart: unless-stopped
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: "true"
+      MYSQL_DATABASE: "passbolt"
+      MYSQL_USER: "passbolt"
+      MYSQL_PASSWORD: "P4ssb0lt"
+    volumes:
+      - database_volume:/var/lib/mysql
+
+  passbolt:
+    image: passbolt/passbolt:latest-ce
+    restart: unless-stopped
+    container_name: passbolt
+    depends_on:
+      - db
+    environment:
+      APP_FULL_BASE_URL: https://${domain}
+      DATASOURCES_DEFAULT_HOST: "db"
+      DATASOURCES_DEFAULT_USERNAME: "passbolt"
+      DATASOURCES_DEFAULT_PASSWORD: "P4ssb0lt"
+      DATASOURCES_DEFAULT_DATABASE: "passbolt"
+      EMAIL_DEFAULT_FROM_NAME: "Passbolt form RH"
+      EMAIL_DEFAULT_FROM: "${username_smtp}"
+      EMAIL_TRANSPORT_DEFAULT_HOST: "${server_smtp}"
+      EMAIL_TRANSPORT_DEFAULT_PORT: "${port_smtp}"
+      EMAIL_TRANSPORT_DEFAULT_USERNAME: "${username_smtp}"
+      EMAIL_TRANSPORT_DEFAULT_PASSWORD: "${password_smtp}"
+      EMAIL_TRANSPORT_DEFAULT_TLS: true
+    volumes:
+      - gpg_volume:/etc/passbolt/gpg
+      - jwt_volume:/etc/passbolt/jwt
+      - ${fullchain}:/etc/ssl/certs/certificate.crt:ro
+      - ${privkey}:/etc/ssl/certs/certificate.key:ro
+    command:
+      - /bin/bash
+      - -c
+      - |
+        # Uncomment the below two lines if you are using ldap sync. Change '* * * * *' to your preferred sync schedule. More info: https://en.wikipedia.org/wiki/Cron
+        # touch /var/log/cron.log && chown www-data:www-data /var/log/cron.log
+        # echo '* * * * * www-data exec /bin/bash -c "source /etc/environment && /usr/share/php/passbolt/bin/cake directory_sync all --persist" >> /var/log/cron.log 2>&1' >> /etc/cron.d/passbolt-pro-server
+        /usr/bin/wait-for.sh -t 0 db:3306 -- /docker-entrypoint.sh
+    ports:
+      - '80:80'
+      - '443:443'
+      - '${port_smtp}:${port_smtp}'
+    env_file:
+      - ./.env
+
+volumes:
+  database_volume:
+  gpg_volume:
+  jwt_volume:
