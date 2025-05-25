@@ -1,0 +1,22 @@
+services:
+  gitlab-letsencrypt:
+    image: 'gitlab/gitlab-ee:latest'
+    container_name: ${CONTAINER_NAME}
+    restart: always
+    hostname: ${MAIN_DOMAIN}
+    environment:
+      GITLAB_ROOT_EMAIL: "admin@domain.com"
+      GITLAB_ROOT_PASSWORD: "SecurePassword123!"
+    volumes:
+      - '${GITLAB_DATA_PATH}config:/etc/gitlab'
+      - '${GITLAB_DATA_PATH}logs:/var/log/gitlab'
+      - '${GITLAB_DATA_PATH}data:/var/opt/gitlab'
+    env_file:
+      - ./.env
+    networks:
+      - default
+
+networks:
+  default:
+    external:
+      name: ${NETWORK}

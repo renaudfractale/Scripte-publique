@@ -1,0 +1,22 @@
+services:
+  gitlab-letsencrypt:
+    image: 'gitlab/gitlab-ee:latest'
+    container_name: ${CONTAINER_NAME}
+    restart: always
+    hostname: ${MAIN_DOMAIN}
+    environment:
+      GITLAB_ROOT_EMAIL: "admin@domain.com"
+      GITLAB_ROOT_PASSWORD: "SecurePassword123!"
+      GITLAB_OMNIBUS_CONFIG: |
+        # Add any other gitlab.rb configuration here, each on its own line
+        # external_url 'http://${MAIN_DOMAIN}'
+        # gitlab_rails['gitlab_sign_up_enabled'] = false
+    volumes:
+      - '${GITLAB_DATA_PATH}config:/etc/gitlab'
+      - '${GITLAB_DATA_PATH}logs:/var/log/gitlab'
+      - '${GITLAB_DATA_PATH}data:/var/opt/gitlab'
+    env_file:
+      - ./.env
+    ports:
+      - '80:80'       # Changed host port for HTTP
+      - '443:443'      # Changed host port for HTTPS

@@ -1,0 +1,21 @@
+services:
+  gitlab:
+    image: gitlab/gitlab-ee:latest
+    container_name: gitlab-ai
+    restart: always
+    environment:
+      GITLAB_ROOT_EMAIL: "admin@example.com"
+      GITLAB_ROOT_PASSWORD: "SecurePassword123"
+      GITLAB_OMNIBUS_CONFIG: |
+        # Add any other gitlab.rb configuration here, each on its own line
+        external_url 'https://gitlab.domaine.com'
+    ports:
+      - '127.0.0.1:8080:80'       # Changed host port for HTTP
+      - '127.0.0.1:8443:443'      # Changed host port for HTTPS
+      - '127.0.0.1:8022:22'       # Changed host port for SSH
+    volumes:
+      - './gitlab/config:/etc/gitlab'
+      - './gitlab/logs:/var/log/gitlab'
+      #- './gitlab/data:/var/opt/gitlab'
+      #- './gitlab/backups:/var/opt/gitlab/backups'
+    shm_size: '256m'
