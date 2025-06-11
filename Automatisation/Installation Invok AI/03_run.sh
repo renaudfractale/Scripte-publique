@@ -1,1 +1,1 @@
-cd /home/paperspace/invokeai && source .venv/bin/activate && invokeai-web &
+cd /home/paperspace/invokeai && source .venv/bin/activate && screen invokeai-web

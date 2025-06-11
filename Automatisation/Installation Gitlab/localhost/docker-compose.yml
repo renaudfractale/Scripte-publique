@@ -10,9 +10,9 @@ services:
         # Add any other gitlab.rb configuration here, each on its own line
         # gitlab_sign_up_enabled false
     ports:
-      - '80:80'       # Changed host port for HTTP
-      - '443:443'      # Changed host port for HTTPS
-      - '22:22'       # Changed host port for SSH
+      - '127.0.0.1:80:80'       # Changed host port for HTTP
+      - '127.0.0.1:443:443'      # Changed host port for HTTPS
+      - '127.0.0.1:22:22'       # Changed host port for SSH
     volumes:
       - './gitlab/config:/etc/gitlab'
       - './gitlab/logs:/var/log/gitlab'
