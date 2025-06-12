@@ -16,3 +16,5 @@ sudo apt install nvidia-utils-550-server  -y
 sudo nvidia-ctk runtime configure --runtime=docker
 sudo systemctl restart docker
 
+reboot
+

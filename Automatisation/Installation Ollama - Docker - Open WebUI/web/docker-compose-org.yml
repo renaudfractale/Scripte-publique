@@ -8,7 +8,7 @@ services:
     restart: unless-stopped
     image: ollama/ollama:latest
     ports:
-      - '127.0.0.1:11434:11434'
+      - 11434:11434
     environment:
       - OLLAMA_KEEP_ALIVE=24h  
     deploy:
@@ -30,7 +30,7 @@ services:
     ports:
       - '127.0.0.1:3000:8080'
     environment:
-      - 'OLLAMA_BASE_URL=http://ollama:11434' #http://ollama:11434
+      - 'OLLAMA_BASE_URL=http://ollama:11434'
       - 'WEBUI_SECRET_KEY='
       - 'WEBUI_NAME=Ollama Webui'
       - 'WEBUI_AUTH=False'
