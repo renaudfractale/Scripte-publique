@@ -62,7 +62,7 @@ Ce projet automatise l'installation et la configuration d’un serveur [Passbolt
 | `docker-compose.yml`       | Configuration Docker Compose pour Passbolt                                 |
 | `stopAllDocker.sh`         | Stoppe tous les conteneurs Docker                                          |
 
-###⚙️ Prérequis
+### ⚙️ Prérequis
 
 - Ubuntu Server 22.04
 - Accès root ou `sudo`
