@@ -1,0 +1,50 @@
+services:
+  haproxy:
+    image: haproxy:latest
+    #restart: unless-stopped
+    container_name: llava-haproxy
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+    depends_on:
+      - llava-gpu0
+      - llava-gpu1
+      - llava-gpu2
+      - llava-gpu3
+
+  llava-gpu0:
+    build: ./app
+    #restart: unless-stopped
+    container_name: llava-gpu0
+    runtime: nvidia
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+    shm_size: '16gb'
+
+  llava-gpu1:
+    build: ./app
+    #restart: unless-stopped
+    container_name: llava-gpu1
+    runtime: nvidia
+    environment:
+      - CUDA_VISIBLE_DEVICES=1
+    shm_size: '16gb'
+
+  llava-gpu2:
+    build: ./app
+    #restart: unless-stopped
+    container_name: llava-gpu2
+    runtime: nvidia
+    environment:
+      - CUDA_VISIBLE_DEVICES=2
+    shm_size: '16gb'
+
+  llava-gpu3:
+    build: ./app
+    #restart: unless-stopped
+    container_name: llava-gpu3
+    runtime: nvidia
+    environment:
+      - CUDA_VISIBLE_DEVICES=3
+    shm_size: '16gb'

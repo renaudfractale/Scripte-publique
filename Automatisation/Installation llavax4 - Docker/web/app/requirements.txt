@@ -1,0 +1,10 @@
+torch
+transformers
+accelerate
+sentencepiece
+torchvision
+fastapi
+uvicorn
+pillow
+git+https://github.com/huggingface/peft
+git+https://github.com/haotian-liu/LLaVA.git
